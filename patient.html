@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Patient Details - MedMonitor</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-tint": "#006a6a", "on-secondary-container": "#6b6244", "surface-container-high": "#d6ecee", "tertiary-container": "#cda62e", "surface-dim": "#c8dee0", "outline-variant": "#bdc9c8", "on-secondary": "#ffffff", primary: "#006969", "surface-bright": "#e9fdff", "on-primary-fixed": "#002020", "on-tertiary": "#ffffff", "on-primary": "#ffffff", "tertiary-fixed-dim": "#ebc248", "on-tertiary-container": "#4f3d00", tertiary: "#755b00", "on-secondary-fixed-variant": "#4f462a", error: "#ba1a1a", outline: "#6e7979", "surface-variant": "#d0e7e9", "on-secondary-fixed": "#211b04", "surface-container-highest": "#d0e7e9", "tertiary-fixed": "#ffe08f", "on-primary-fixed-variant": "#004f50", "secondary-container": "#ecdfb9", "surface-container": "#dcf2f4", "primary-container": "#278383", "surface-container-lowest": "#ffffff", "on-surface": "#0a1f20", "primary-fixed-dim": "#80d4d4", background: "#e9fdff", surface: "#e9fdff", "on-primary-container": "#ffffff", "error-container": "#ffdad6", "on-error-container": "#93000a", "on-background": "#0a1f20", "secondary-fixed-dim": "#d2c6a1", secondary: "#675e40", "primary-fixed": "#9cf1f0", "inverse-on-surface": "#def5f7", "on-tertiary-fixed-variant": "#584400", "on-error": "#ffffff", "on-surface-variant": "#3e4948", "surface-container-low": "#e1f8fa", "inverse-surface": "#203436", "secondary-fixed": "#efe2bc", "on-tertiary-fixed": "#241a00", "inverse-primary": "#80d4d4"}, borderRadius: {DEFAULT: "1rem", lg: "2rem", xl: "3rem", full: "9999px"}, spacing: {gutter: "16px", unit: "4px", topbar_height: "64px", density_low: "24px", density_high: "8px", density_med: "16px", sidebar_width: "260px", margin_container: "24px"}, fontFamily: {"label-caps": ["Inter"], "h3-section": ["Inter"], "body-base": ["Inter"], "h2-header": ["Inter"], "h1-display": ["Inter"], "body-sm": ["Inter"], "data-mono": ["Inter"]}, fontSize: {"label-caps": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700"}], "h3-section": ["18px", {lineHeight: "28px", fontWeight: "600"}], "body-base": ["14px", {lineHeight: "20px", fontWeight: "400"}], "h2-header": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "h1-display": ["30px", {lineHeight: "36px", letterSpacing: "-0.02em", fontWeight: "700"}], "body-sm": ["13px", {lineHeight: "18px", fontWeight: "400"}], "data-mono": ["14px", {lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600"}]}}}};</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+        }
+        /* Custom scrollbar for a cleaner clinical look */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bfc7d2;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-base antialiased min-h-screen overflow-x-hidden">
+<!-- SideNavBar -->
+<aside class="bg-slate-900 dark:bg-black font-sans text-sm font-medium tracking-tight h-full w-[260px] fixed left-0 top-0 z-40 border-r border-slate-800 flex flex-col h-screen">
+<!-- Header -->
+<div class="px-6 py-8 flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-sky-500/20 flex items-center justify-center text-sky-500">
+<span class="material-symbols-outlined" data-weight="fill">monitor_heart</span>
+</div>
+<span class="text-lg font-bold text-white tracking-wider">MedMonitor</span>
+</div>
+<span class="text-xs text-slate-500 font-medium tracking-widest uppercase">Clinical Portal</span>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 overflow-y-auto py-4">
+<ul class="flex flex-col gap-1">
+<!-- Dashboard (Inactive) -->
+<li>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all duration-200 ease-in-out cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<!-- Patient Details (Active) -->
+<li>
+<a class="flex items-center gap-3 px-6 py-3 text-white bg-slate-800 border-l-4 border-sky-500 transition-all duration-200 ease-in-out cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]" data-weight="fill">person</span>
+<span>Patient Details</span>
+</a>
+</li>
+<!-- Alerts (Inactive) -->
+<li>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all duration-200 ease-in-out cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">emergency</span>
+<span>Alerts</span>
+</a>
+</li>
+<!-- Analytics (Inactive) -->
+<li>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all duration-200 ease-in-out cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span>Analytics</span>
+</a>
+</li>
+<!-- Settings (Inactive) -->
+<li>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all duration-200 ease-in-out cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>Settings</span>
+</a>
+</li>
+</ul>
+</nav>
+</aside>
+<!-- TopAppBar -->
+<header class="bg-white dark:bg-slate-950 font-sans text-sm font-medium fixed top-0 right-0 left-[260px] h-[64px] z-30 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 w-[calc(100%-260px)]">
+<!-- Search -->
+<div class="flex-1 max-w-md">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-slate-400 text-[20px]">search</span>
+<input class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg py-2 pl-10 pr-4 text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:ring-2 focus:ring-sky-500 focus:outline-none transition-all duration-200" placeholder="Search patient ID or name..." type="text"/>
+</div>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-lg transition-all duration-200 focus:ring-2 focus:ring-sky-500 focus:outline-none">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-lg transition-all duration-200 focus:ring-2 focus:ring-sky-500 focus:outline-none">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+</button>
+<div class="w-px h-6 bg-slate-200 dark:bg-slate-800 mx-2"></div>
+<button class="w-8 h-8 rounded-full overflow-hidden border border-slate-200 focus:ring-2 focus:ring-sky-500 focus:outline-none">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A small, professional headshot photo of a medical practitioner wearing scrubs, set against a neutral, well-lit background. The style is hyper-realistic and clean, fitting perfectly into a minimalist, light-mode clinical software interface. The colors are muted, relying on crisp whites and subtle cool tones to convey a sterile, corporate environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb-VqUEO3x7wjSR9_SDfQPzEulBpuN7rQM4AIfgHbrS2PtVyYC-BdFPE55ukJXVZXE6NgYHIwtUiFzhqoqn_1Ro0UlIjkxWi8BGCPzhwQFh_gNcAnbckRzUUkG9qcuneMqqqKuEw-PqUOmWIraOBjGjO5T0P5-Vnb8vQM22Eikd_kBQQC3Tm3SyqU9uxAabverVLP84-Xtbkm1nN5cvKNRYSRoATP3IbPEDbOdPkgza5PsQr1oSYDyBgBj9ZiV8wYTd7JDgtvbAFM"/>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[260px] mt-[64px] p-margin_container flex flex-col gap-gutter">
+<!-- Patient Header Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg p-density_low flex flex-col md:flex-row md:items-center justify-between gap-gutter">
+<div class="flex items-center gap-6">
+<!-- Avatar Placeholder -->
+<div class="w-16 h-16 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-h2-header text-h2-header flex-shrink-0">
+                    RM
+                </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-3">
+<h1 class="font-h1-display text-h1-display text-on-surface">Robert Miller, 64</h1>
+<span class="bg-primary-fixed text-on-primary-fixed rounded-full px-3 py-1 font-label-caps text-label-caps inline-flex items-center">
+                            Stable
+                        </span>
+</div>
+<div class="font-body-base text-body-base text-secondary flex items-center gap-4 mt-1">
+<span>ID: P-9824-A</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span>Admitted: Oct 24, 08:30 AM</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span>Ward B, Bed 12</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="bg-surface-container-lowest border border-outline-variant text-on-surface hover:bg-surface-container-low px-4 py-2 rounded font-body-base text-body-base transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">edit_document</span>
+                    Notes
+                </button>
+<button class="bg-primary text-on-primary hover:bg-primary-container px-4 py-2 rounded font-body-base text-body-base transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">science</span>
+                    Order Labs
+                </button>
+</div>
+</section>
+<!-- Real-time Vitals Grid (Bento style) -->
+<section class="grid grid-cols-12 gap-gutter">
+<!-- Heart Rate -->
+<div class="col-span-12 md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-lg p-density_med flex flex-col justify-between min-h-[140px]">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+<h3 class="font-h3-section text-h3-section">Heart Rate</h3>
+</div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest">BPM</span>
+</div>
+<div class="flex items-end justify-between mt-4">
+<div class="flex items-baseline gap-2">
+<span class="font-h1-display text-[48px] leading-none font-bold text-on-surface tracking-tighter">72</span>
+</div>
+<div class="flex flex-col items-end">
+<div class="flex items-center text-primary-container font-data-mono text-data-mono">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+2.4</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">Last 1h</span>
+</div>
+</div>
+</div>
+<!-- SpO2 -->
+<div class="col-span-12 md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-lg p-density_med flex flex-col justify-between min-h-[140px]">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">air</span>
+<h3 class="font-h3-section text-h3-section">SpO2</h3>
+</div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest">%</span>
+</div>
+<div class="flex items-end justify-between mt-4">
+<div class="flex items-baseline gap-2">
+<span class="font-h1-display text-[48px] leading-none font-bold text-on-surface tracking-tighter">98</span>
+</div>
+<div class="flex flex-col items-end">
+<div class="flex items-center text-secondary font-data-mono text-data-mono">
+<span class="material-symbols-outlined text-[16px]">horizontal_rule</span>
+<span>0.0</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">Last 1h</span>
+</div>
+</div>
+</div>
+<!-- Temperature -->
+<div class="col-span-12 md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-lg p-density_med flex flex-col justify-between min-h-[140px]">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">device_thermostat</span>
+<h3 class="font-h3-section text-h3-section">Temperature</h3>
+</div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest">°F</span>
+</div>
+<div class="flex items-end justify-between mt-4">
+<div class="flex items-baseline gap-2">
+<span class="font-h1-display text-[48px] leading-none font-bold text-on-surface tracking-tighter">98.6</span>
+</div>
+<div class="flex flex-col items-end">
+<div class="flex items-center text-error font-data-mono text-data-mono">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+0.2</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">Last 1h</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Secondary Section: Trends & Alerts -->
+<section class="grid grid-cols-12 gap-gutter">
+<!-- Trend Charts (8 columns) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-lg p-density_low flex flex-col gap-6">
+<div class="flex items-center justify-between border-b border-surface-container-high pb-4">
+<h2 class="font-h2-header text-h2-header text-on-surface">24h History</h2>
+<span class="font-label-caps text-label-caps text-secondary">UPDATED JUST NOW</span>
+</div>
+<!-- Stacked Sparklines -->
+<div class="flex flex-col gap-8">
+<!-- HR Chart -->
+<div class="relative h-20 w-full group">
+<div class="absolute -left-4 top-0 bottom-0 flex flex-col justify-between font-data-mono text-[10px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">
+<span>100</span>
+<span>60</span>
+</div>
+<div class="absolute -top-6 left-0 font-body-sm text-body-sm text-secondary">Heart Rate</div>
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<!-- Grid lines -->
+<line stroke="#e5e8ee" stroke-dasharray="2,2" stroke-width="0.5" x1="0" x2="100" y1="25" y2="25"></line>
+<line stroke="#e5e8ee" stroke-dasharray="2,2" stroke-width="0.5" x1="0" x2="100" y1="75" y2="75"></line>
+<!-- Data path -->
+<path d="M0,50 L10,55 L20,45 L30,48 L40,60 L50,40 L60,45 L70,30 L80,35 L90,20 L100,25" fill="none" stroke="#006194" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<!-- SpO2 Chart -->
+<div class="relative h-20 w-full group">
+<div class="absolute -left-4 top-0 bottom-0 flex flex-col justify-between font-data-mono text-[10px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">
+<span>100</span>
+<span>90</span>
+</div>
+<div class="absolute -top-6 left-0 font-body-sm text-body-sm text-secondary">SpO2</div>
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<!-- Grid lines -->
+<line stroke="#e5e8ee" stroke-dasharray="2,2" stroke-width="0.5" x1="0" x2="100" y1="20" y2="20"></line>
+<line stroke="#e5e8ee" stroke-dasharray="2,2" stroke-width="0.5" x1="0" x2="100" y1="80" y2="80"></line>
+<!-- Data path -->
+<path d="M0,10 L10,12 L20,10 L30,15 L40,10 L50,8 L60,10 L70,12 L80,10 L90,15 L100,10" fill="none" stroke="#54647a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<!-- Temp Chart -->
+<div class="relative h-20 w-full group">
+<div class="absolute -left-4 top-0 bottom-0 flex flex-col justify-between font-data-mono text-[10px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">
+<span>100</span>
+<span>97</span>
+</div>
+<div class="absolute -top-6 left-0 font-body-sm text-body-sm text-secondary">Temperature</div>
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<!-- Grid lines -->
+<line stroke="#e5e8ee" stroke-dasharray="2,2" stroke-width="0.5" x1="0" x2="100" y1="20" y2="20"></line>
+<line stroke="#e5e8ee" stroke-dasharray="2,2" stroke-width="0.5" x1="0" x2="100" y1="80" y2="80"></line>
+<!-- Data path -->
+<path d="M0,50 L10,50 L20,48 L30,45 L40,46 L50,40 L60,42 L70,45 L80,44 L90,46 L100,45" fill="none" stroke="#ac6200" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Recent Alerts (4 columns) -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-density_med h-full">
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-h3-section text-h3-section text-on-surface">Recent Alerts</h2>
+<button class="text-primary hover:text-primary-container font-label-caps text-label-caps transition-colors">VIEW ALL</button>
+</div>
+<ul class="flex flex-col gap-2">
+<!-- Alert Item 1 -->
+<li class="p-density_high rounded bg-surface-container-low border border-surface-container flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary-container text-[18px] mt-0.5">warning</span>
+<div class="flex flex-col">
+<span class="font-body-base text-body-base font-semibold text-on-surface">Mild Tachycardia</span>
+<span class="font-body-sm text-body-sm text-secondary">HR peaked at 105 BPM</span>
+<span class="font-data-mono text-[11px] text-outline mt-1">10:42 AM</span>
+</div>
+</li>
+<!-- Alert Item 2 -->
+<li class="p-density_high rounded bg-surface-container-lowest hover:bg-surface-container-low border border-transparent transition-colors flex items-start gap-3 cursor-pointer">
+<span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">info</span>
+<div class="flex flex-col">
+<span class="font-body-base text-body-base font-medium text-on-surface">Medication Administered</span>
+<span class="font-body-sm text-body-sm text-secondary">Lisinopril 10mg IV</span>
+<span class="font-data-mono text-[11px] text-outline mt-1">08:00 AM</span>
+</div>
+</li>
+<!-- Alert Item 3 -->
+<li class="p-density_high rounded bg-surface-container-lowest hover:bg-surface-container-low border border-transparent transition-colors flex items-start gap-3 cursor-pointer">
+<span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">sensor_door</span>
+<div class="flex flex-col">
+<span class="font-body-base text-body-base font-medium text-on-surface">Room Entry Logged</span>
+<span class="font-body-sm text-body-sm text-secondary">Dr. Sarah Jenkins</span>
+<span class="font-data-mono text-[11px] text-outline mt-1">07:15 AM</span>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Tertiary Section: Location & Info -->
+<section class="grid grid-cols-12 gap-gutter mb-8">
+<!-- Wearable Location Map (8 columns) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+<div class="p-density_med border-b border-outline-variant flex items-center justify-between bg-surface-container-lowest z-10">
+<h2 class="font-h3-section text-h3-section text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">location_on</span>
+                        Wearable Location
+                    </h2>
+<span class="font-body-sm text-body-sm text-secondary bg-surface-container px-2 py-1 rounded">Ward B, Zone 2</span>
+</div>
+<div class="relative h-[240px] w-full bg-surface-container-high"><!-- Map Background and Elements -->
+<div class="absolute inset-0 bg-[#e5e3df]" style="background-image: radial-gradient(#d1d1d1 1px, transparent 1px), linear-gradient(90deg, #d9d9d9 1px, transparent 1px), linear-gradient(#d9d9d9 1px, transparent 1px); background-size: 40px 40px, 120px 120px, 120px 120px;">
+<!-- Simulated Street Blocks -->
+<div class="absolute top-10 left-20 w-32 h-24 bg-white rounded shadow-sm opacity-60"></div>
+<div class="absolute top-40 left-4 w-40 h-16 bg-white rounded shadow-sm opacity-60"></div>
+<div class="absolute top-10 right-10 w-24 h-48 bg-white rounded shadow-sm opacity-60"></div>
+</div>
+<!-- Map Search Bar -->
+<div class="absolute top-4 left-4 z-10">
+<div class="flex items-center bg-white rounded-lg shadow-md px-3 py-1.5 w-64 border border-slate-200">
+<span class="material-symbols-outlined text-[18px] text-slate-500 mr-2">search</span>
+<input class="text-sm text-on-surface border-none p-0 focus:ring-0 w-full placeholder-slate-400" placeholder="Search Ward B..." type="text"/>
+<div class="w-px h-4 bg-slate-200 mx-2"></div>
+<span class="material-symbols-outlined text-[18px] text-primary cursor-pointer">directions</span>
+</div>
+</div>
+<!-- Map Controls (Bottom Right) -->
+<div class="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
+<!-- Location Button -->
+<button class="w-10 h-10 bg-white rounded shadow-md flex items-center justify-center hover:bg-slate-50 transition-colors border border-slate-200">
+<span class="material-symbols-outlined text-[20px] text-slate-600">my_location</span>
+</button>
+<!-- Zoom Controls -->
+<div class="flex flex-col bg-white rounded shadow-md border border-slate-200">
+<button class="w-10 h-10 flex items-center justify-center hover:bg-slate-50 transition-colors border-b border-slate-200">
+<span class="material-symbols-outlined text-[20px] text-slate-600">add</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-[20px] text-slate-600">remove</span>
+</button>
+</div>
+</div>
+<!-- Overlay Patient Pin -->
+<div class="absolute top-[45%] left-[55%] transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group">
+<div class="relative flex items-center justify-center">
+<div class="absolute w-8 h-8 bg-primary/20 rounded-full animate-ping"></div>
+<div class="w-5 h-5 bg-primary rounded-full border-2 border-white shadow-lg z-20"></div>
+<!-- Optional label on hover -->
+<div class="absolute -top-10 bg-inverse-surface text-inverse-on-surface px-2 py-1 rounded text-[11px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+            Robert Miller
+        </div>
+</div>
+<div class="w-0.5 h-2 bg-primary"></div>
+</div></div>
+</div>
+<!-- Quick Info / Patient Context (4 columns) -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-lg p-density_med">
+<h2 class="font-h3-section text-h3-section text-on-surface mb-4">Contextual Info</h2>
+<div class="flex flex-col gap-4">
+<div>
+<span class="font-label-caps text-label-caps text-secondary block mb-1">ALLERGIES</span>
+<div class="flex flex-wrap gap-2">
+<span class="bg-error-container text-on-error-container px-2 py-1 rounded text-xs font-medium">Penicillin</span>
+<span class="bg-error-container text-on-error-container px-2 py-1 rounded text-xs font-medium">Latex</span>
+</div>
+</div>
+<div class="w-full h-px bg-outline-variant opacity-50"></div>
+<div>
+<span class="font-label-caps text-label-caps text-secondary block mb-1">PRIMARY PHYSICIAN</span>
+<span class="font-body-base text-body-base text-on-surface font-medium block">Dr. Emily Chen</span>
+<span class="font-body-sm text-body-sm text-secondary block">Cardiology Dept.</span>
+</div>
+<div class="w-full h-px bg-outline-variant opacity-50"></div>
+<div>
+<span class="font-label-caps text-label-caps text-secondary block mb-1">CODE STATUS</span>
+<span class="font-body-base text-body-base text-on-surface font-medium block">Full Code</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>
